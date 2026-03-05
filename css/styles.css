@@ -1,0 +1,155 @@
+.exo2 {
+    font-family: "Exo 2", sans-serif;
+}
+
+.nunito {
+    font-family: "Nunito", sans-serif;
+}
+
+html[data-bs-theme]:not([data-bs-theme="dark"]) .contact #icon-github {
+    filter: invert(100%);
+}
+html[data-bs-theme]:not([data-bs-theme="dark"]) .icon-img {
+    filter: invert(30%);
+}
+html[data-bs-theme]:not([data-bs-theme="light"]) .quote {
+    filter: invert(100%) brightness(120%);
+}
+
+:root {
+    --bs-primary-rgb: 116, 0, 254;
+    --bs-primary: #7400fe;
+
+    --primary-color: #7400fe;
+    --href-color: #ff82e6;
+    --href-hover-color: #bf45cf;
+    --href-hover-visited: #ad57db;
+}
+
+a {
+    color: var(--href-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--href-hover-color);
+}
+
+::selection {
+    background: var(--bs-primary);
+    color: #ffffff;
+}
+
+li {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    filter: drop-shadow(3px 3px 0px var(--primary-color));
+    transition: all ease 0.2s;
+}
+li:hover {
+    text-shadow: 1px 1px 1px var(--href-color), 1px 1px 1px var(--href-color);
+    transform: scale(1.05);
+}
+
+.projects-container {
+    grid-template-columns: repeat(auto-fill, 250px);
+}
+
+@media (min-width: 0px) and (max-width: 594px) {
+    .projects-container {
+        display: flex !important;
+        flex-direction: row !important;
+        width: max-content !important;
+    }
+}
+
+.project-image-container{
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: all ease 0.2s;
+    
+}
+.project-image-container:hover {
+    background-color: rgb(229, 229, 229);
+}
+
+.card-img-top {
+    transition: transform ease 0.2s;
+    mix-blend-mode: multiply;
+}
+
+.card-img-top:hover {
+    transform: scale(1.1);
+}
+
+.card {
+    flex-shrink: 0;
+    width: 250px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.0.2),
+        transparent 40%
+    );
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 500ms;
+    pointer-events: none;
+}
+
+#projects-list:hover .card::before {
+    opacity: 1;
+}
+
+.pcard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        1000px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.06),
+        transparent 20%
+    );
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 500ms;
+    pointer-events: none;
+}
+
+#projects-list:hover .pcard::before {
+    opacity: 1;
+}
+
+.card-img-top {
+    cursor: pointer;
+}
+
+.project-svg {
+    height: 25px; 
+    left: 5px; 
+    bottom: 5px;
+}
+
+.contact p {
+    position: relative;
+    top: 8px;
+}
+
+.contact #icon-github { transform: scale(1.1); color: white; transition: transform 0.2s ease; }
+.contact #icon-github:hover { transform: scale(1.3); color: #b4b4b4; }
+.contact #icon-linkedin { transform: scale(1.1); color: #0e76a8; transition: transform 0.2s ease; }
+.contact #icon-linkedin:hover { transform: scale(1.3); color: #11648a; }
+.contact #icon-instagram { transform: scale(1.1); color: #c13584; transition: transform 0.2s ease; }
+.contact #icon-instagram:hover { transform: scale(1.3); color: #9e2e6d; }
+
+footer {
+    background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)) !important;
+}
