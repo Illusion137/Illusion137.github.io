@@ -48,6 +48,7 @@ function insert_project(project){
             <div class="pcard card-body">
                 <h3 class="card-title d-inline">${project.github ? `<a href="${project.github}">${project.title}</a>` : project.title}</h3>
                 ${project_card_stack_icons_html}
+                ${project?.demo ? `<a href="${project.demo}">(Live Demo)</a>` : ""}
                 <p class="card-text">${project.brief_description}</p>
                 <p class="card-text">${project.expanded_description}</p>
             </div>
