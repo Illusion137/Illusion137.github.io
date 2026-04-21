@@ -4,11 +4,11 @@
 		<title>BW Pokemon</title>
 		<meta name="description" content="A list of Pokemon from Black/White" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="pokemon/style.css" />
+		<link rel="stylesheet" href="style.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Spinnaker&display=swap" rel="stylesheet"/>
-		<script type="text/javascript" src="pokemon/scripts.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
 	</head>
 	<body>
 		<header class="main-header">
@@ -22,6 +22,73 @@
 				</svg>
 				<span>Filters</span>
 			</button>
+			<div id="sort-details">
+				<button id="sort-trigger">
+					<span>Sort</span>
+					<svg class="sort-down-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+					</svg>
+				</button>
+				<div id="sort-menu">
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="reverse"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Reverse</span>
+					</label>
+					<div class="sort-divider"></div>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="dex_no" checked/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Dex Number</span></label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="name"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Name</span>
+					</label>
+					<div class="sort-divider"></div>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="hp"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">HP</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="atk"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Attack</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="def"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Defense</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="spa"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Special Attack</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="spd"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Special Defense</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="spe"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Speed</span>
+					</label>
+					<div class="sort-divider"></div>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="height"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Height</span>
+					</label>
+					<label class="sort-option">
+						<input type="checkbox" name="sort" value="weight"/>
+						<span class="sort-checkbox-indicator"></span>
+						<span class="sort-option-text">Weight</span>
+					</label>
+				</div>
+			</div>
 		</div>
 		<div id="filter-popup">
 			<div id="filter-popup-panel">

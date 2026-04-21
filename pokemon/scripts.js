@@ -56,7 +56,31 @@ function filter_pokemon(opts){
     });
 }
 
-const get_pokemon_gif = (pokemon) => `https://www.smogon.com/dex/media/sprites/bw/${pokemon.name.toLowerCase()}.gif`;
+function sort_pokemon(pokemon, opts){
+    const STRING_CONSTANT = 255;
+    const get_stat = (pokemon, stat) => pokemon.stats.find(s => s[stat])?.[stat] ?? 0;
+    const sorted = pokemon.slice().sort((a, b) => {
+        let value = 0;
+        if(opts.dex_no) value += (a.oob?.dex_no ?? 0) - (b.oob?.dex_no ?? 0);
+        if(opts.name) value += STRING_CONSTANT * a.name.localeCompare(b.name);
+        if(opts.hp) value += get_stat(a, "hp") - get_stat(b, "hp");
+        if(opts.atk) value += get_stat(a, "atk") - get_stat(b, "atk");
+        if(opts.def) value += get_stat(a, "def") - get_stat(b, "def");
+        if(opts.spa) value += get_stat(a, "spa") - get_stat(b, "spa");
+        if(opts.spd) value += get_stat(a, "spd") - get_stat(b, "spd");
+        if(opts.spe) value += get_stat(a, "spe") - get_stat(b, "spe");
+        if(opts.height) value += a.height - b.height;
+        if(opts.weight) value += a.weight - b.weight;
+        return value;
+    });
+    if(!opts.reverse) return sorted;
+    return sorted.reverse();
+}
+
+
+const get_pokemon_gif = (pokemon) => pokemon.name.startsWith("Genesect") ? 
+    `https://www.smogon.com/dex/media/sprites/bw/genesect.gif`
+    : `https://www.smogon.com/dex/media/sprites/bw/${pokemon.name.toLowerCase()}.gif`;
 
 const in_range = (num, left, right) => num >= left && num <= right;
 function get_stat_viability_class(value){
@@ -152,7 +176,7 @@ function insert_pokemon_card(pokemon){
 }
 
 function insert_pokemon_card_list(){
-	for(const pokemon of filter_pokemon(get_filter_opts()).slice(offset, offset + LIMIT))
+	for(const pokemon of sort_pokemon(filter_pokemon(get_filter_opts()), get_sort_opts()).slice(offset, offset + LIMIT))
 	{
 		insert_pokemon_card(pokemon);
 	}
@@ -166,11 +190,11 @@ function clear_insert_pokemon_card_list(){
 
 // The pokemon's name is more unique that dex number; some pokemon have multiple forms
 let previous_id_set = new Set(pokemons.map(pokemon => pokemon.name ?? 0));
-function on_filters_updated(){
-    const filtered_pokemon = filter_pokemon(get_filter_opts());
+function on_filters_updated(sort_changed){
+    const filtered_pokemon = sort_pokemon(filter_pokemon(get_filter_opts()), get_sort_opts());
     const updated_id_set = new Set(filtered_pokemon.map(pokemon => pokemon.name ?? 0));
     const intersection_set = previous_id_set.intersection(updated_id_set);
-    if(updated_id_set.size === previous_id_set.size && intersection_set.size === previous_id_set.size) return;
+    if(updated_id_set.size === previous_id_set.size && intersection_set.size === previous_id_set.size && !sort_changed) return;
     clear_insert_pokemon_card_list();
     document.querySelector("#filter-result-count").textContent = `${filtered_pokemon.length}/${pokemons.length} Pokémon`;
     previous_id_set = updated_id_set;
@@ -213,6 +237,13 @@ function get_filter_opts(){
         spd: {geq: get_input_number("spd-geq-input") ?? 0, leq: get_input_number("spd-leq-input") ?? 255},
         spe: {geq: get_input_number("spe-geq-input") ?? 0, leq: get_input_number("spe-leq-input") ?? 255},
     }
+}
+
+function get_sort_opts(){
+    const keys = Array.from(document.querySelectorAll("#sort-menu input:checked")).map(input => input.value);
+    const opts = {};
+    for(const key of keys) opts[key] = true;
+    return opts;
 }
 
 function add_input_refresh(input_id){
@@ -276,6 +307,14 @@ function on_dom_loaded(){
     });
     document.querySelector("#filter-close-btn").addEventListener("click", () => {
         document.querySelector("#filter-popup").classList.remove("active");
+    });
+    document.querySelectorAll("#sort-menu input").forEach(input => {
+        input.addEventListener("change", () => {
+            on_filters_updated(true);
+        });
+    });
+    document.querySelector("#sort-trigger").addEventListener("click", () => {
+        document.querySelector("#sort-details").classList.toggle("open");
     });
 }
 

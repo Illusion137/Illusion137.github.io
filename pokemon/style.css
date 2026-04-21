@@ -345,6 +345,100 @@ body {
 	user-select: none;
 }
 
+#sort-details {
+	position: relative;
+}
+
+#sort-trigger {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 12px;
+	background-color: #1a1a1a;
+	border: 2px solid #3a3a3a;
+	border-radius: 3px;
+	color: #DfDfAf;
+	font-size: 14px;
+	cursor: pointer;
+	user-select: none;
+	white-space: nowrap;
+	transition: border-color 0.2s;
+}
+
+#sort-trigger:hover {
+	border-color: #666;
+}
+
+.sort-down-arrow {
+	transition: transform 0.2s;
+	opacity: 0.5;
+}
+
+#sort-details.open #sort-menu {
+	display: block;
+}
+
+#sort-details.open .sort-down-arrow {
+	transform: rotate(180deg);
+}
+
+#sort-menu {
+	display: none;
+	position: absolute;
+	top: calc(100% + 4px);
+	right: 0;
+	z-index: 50;
+	background-color: #161616;
+	border: 1px solid #333;
+	border-radius: 3px;
+	min-width: 155px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+	padding: 3px 0;
+}
+
+.sort-option {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 10px;
+	cursor: pointer;
+	color: #aaa;
+	font-size: 13px;
+	user-select: none;
+	transition: color 0.1s;
+}
+
+.sort-option:hover {
+	color: #DfDfAf;
+}
+
+.sort-option input[type="checkbox"] {
+	display: none;
+}
+
+.sort-checkbox-indicator {
+	flex-shrink: 0;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: #333;
+	transition: background-color 0.12s;
+}
+
+.sort-option input[type="checkbox"]:checked ~ .sort-checkbox-indicator {
+	background-color: #DfDfAf;
+}
+
+.sort-option input[type="checkbox"]:checked ~ .sort-option-text {
+	color: #DfDfAf;
+}
+
+.sort-divider {
+	height: 1px;
+	background-color: #222;
+	margin: 3px 0;
+}
+
 .filter-stats-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
