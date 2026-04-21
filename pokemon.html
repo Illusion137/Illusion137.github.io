@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+	<head>
+		<title>BW Pokemon</title>
+		<meta name="description" content="A list of Pokemon from Black/White" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="pokemon/style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Spinnaker&display=swap" rel="stylesheet"/>
+		<script type="text/javascript" src="pokemon/scripts.js"></script>
+	</head>
+	<body>
+		<header class="main-header">
+			<h1 class="title">Pokemon Black & White Pokédex</h1>
+		</header>
+		<div id="filter-bar">
+			<input type="text" id="name-input" placeholder="Search by name..." autocomplete="off" />
+			<button id="filter-open-btn">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5M12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5M1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8m9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5m1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+				</svg>
+				<span>Filters</span>
+			</button>
+		</div>
+		<div id="filter-popup">
+			<div id="filter-popup-panel">
+				<div id="filter-popup-header">
+					<span id="filter-popup-title">Filter Pokémon</span>
+					<button id="filter-close-btn">&#x2715;</button>
+				</div>
+				<div id="filter-popup-body">
+					<div class="horizontal">
+						<div class="filter-section-label" style="margin-bottom: 0px;">Type</div>
+						<button id="filter-type-mode-toggle" class="mode-btn or"><span id="filter-type-mode">OR</span></button>
+					</div>
+					<div id="type-selectors">
+						<p class="card-type normal filter-type-toggle" data-type="Normal">Normal</p>
+						<p class="card-type fire filter-type-toggle" data-type="Fire">Fire</p>
+						<p class="card-type water filter-type-toggle" data-type="Water">Water</p>
+						<p class="card-type grass filter-type-toggle" data-type="Grass">Grass</p>
+						<p class="card-type electric filter-type-toggle" data-type="Electric">Electric</p>
+						<p class="card-type ice filter-type-toggle" data-type="Ice">Ice</p>
+						<p class="card-type fighting filter-type-toggle" data-type="Fighting">Fighting</p>
+						<p class="card-type dark filter-type-toggle" data-type="Dark">Dark</p>
+						<p class="card-type ground filter-type-toggle" data-type="Ground">Ground</p>
+						<p class="card-type flying filter-type-toggle" data-type="Flying">Flying</p>
+						<p class="card-type dragon filter-type-toggle" data-type="Dragon">Dragon</p>
+						<p class="card-type ghost filter-type-toggle" data-type="Ghost">Ghost</p>
+						<p class="card-type poison filter-type-toggle" data-type="Poison">Poison</p>
+						<p class="card-type psychic filter-type-toggle" data-type="Psychic">Psychic</p>
+						<p class="card-type rock filter-type-toggle" data-type="Rock">Rock</p>
+						<p class="card-type steel filter-type-toggle" data-type="Steel">Steel</p>
+						<p class="card-type bug filter-type-toggle" data-type="Bug">Bug</p>
+					</div>
+					<div class="filter-divider"></div>
+					<div class="filter-section-label">Species</div>
+					<input type="text" class="filter-text-input" id="species-input" placeholder='e.g. "Seed Pokémon"' autocomplete="off" />
+					<div class="filter-section-label" style="margin-top:14px;">Description</div>
+					<input type="text" class="filter-text-input" id="description-input" placeholder="Search in description..." autocomplete="off" />
+					<div class="filter-divider"></div>
+					<div class="filter-section-label">Physical</div>
+					<div class="filter-range-row">
+						<span class="filter-range-label">Height (m)</span>
+						<div class="filter-range-inputs">
+							<input type="number" class="filter-num-input" id="height-geq-input" placeholder="min" min="0" step="0.1" />
+							<span class="filter-range-sep">-</span>
+							<input type="number" class="filter-num-input" id="height-leq-input" placeholder="max" min="0" step="0.1" />
+						</div>
+					</div>
+					<div class="filter-range-row">
+						<span class="filter-range-label">Weight (kg)</span>
+						<div class="filter-range-inputs">
+							<input type="number" class="filter-num-input" id="weight-geq-input" placeholder="min" min="0" step="1" />
+							<span class="filter-range-sep">-</span>
+							<input type="number" class="filter-num-input" id="weight-leq-input" placeholder="max" min="0" step="1" />
+						</div>
+					</div>
+					<div class="filter-divider"></div>
+					<div class="filter-section-label">Stats</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">HP</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="hp-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="hp-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">Atk</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="atk-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="atk-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">Def</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="def-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="def-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">SpA</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="spa-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="spa-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">SpD</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="spd-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="spd-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+						<div class="filter-range-row">
+							<span class="filter-range-label-small">Spe</span>
+							<div class="filter-range-inputs">
+								<input type="number" class="filter-num-input" id="spe-geq-input" placeholder="0" min="0" max="255" />
+								<span class="filter-range-sep">-</span>
+								<input type="number" class="filter-num-input" id="spe-leq-input" placeholder="255" min="0" max="255" />
+							</div>
+						</div>
+				</div>
+				<div id="filter-popup-footer">
+					<span id="filter-result-count">— / — Pokémon</span>
+					<div id="filter-actions">
+						<button id="filter-clear-btn">Clear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="card-container"></div>
+	</body>
+</html>
