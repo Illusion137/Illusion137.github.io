@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/exo-2';
+@import '@fontsource-variable/nunito';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -127,31 +129,6 @@ body {
 	margin: 0;
 }
 
-h1,
-h2 {
-	font-family: var(--heading);
-	font-weight: 500;
-	color: var(--text-h);
-}
-
-h1 {
-	font-size: 56px;
-	letter-spacing: -1.68px;
-	margin: 32px 0;
-	@media (max-width: 1024px) {
-		font-size: 36px;
-		margin: 20px 0;
-	}
-}
-h2 {
-	font-size: 24px;
-	line-height: 118%;
-	letter-spacing: -0.24px;
-	margin: 0 0 8px;
-	@media (max-width: 1024px) {
-		font-size: 20px;
-	}
-}
 p {
 	margin: 0;
 }
@@ -172,7 +149,8 @@ code {
 }
 
 @theme inline {
-	--font-heading: var(--font-mono);
+	--font-sans: 'Nunito Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-heading: 'Exo 2 Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-mono: 'JetBrains Mono Variable', monospace;
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
@@ -281,9 +259,18 @@ code {
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background font-sans text-foreground;
 	}
-	html {
-		@apply font-mono;
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-heading;
+	}
+	::selection {
+		background: var(--color-primary);
+		color: #ffffff;
 	}
 }
