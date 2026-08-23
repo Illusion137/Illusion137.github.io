@@ -1,0 +1,126 @@
+import { useState } from 'react';
+import Markdown from 'react-markdown';
+import { ArrowSquareOut, GithubLogo, X } from '@phosphor-icons/react';
+import TrackingImage from '@/components/TrackingImage';
+import TrackInfoTags from '@/components/TrackInfoTags';
+import type { Project, ShowcaseItem } from '@/types/portfolio';
+
+type PanelTab = 'info' | 'showcase';
+
+interface AudioplayerScreenProps {
+	project: Project;
+}
+
+function format_years(project: Project) {
+	const start_year = project.start.year;
+	const end_year = project.end === 'present' ? 'Present' : project.end.year;
+	return start_year === end_year && project.end !== 'present' ? `${start_year}` : `${start_year} – ${end_year}`;
+}
+
+function format_role(project: Project) {
+	return project.role === 'self' ? 'Self' : 'Contribution';
+}
+
+const markdown_components = {
+	h1: (props: object) => <h1 className="text-title mb-3 text-2xl font-bold" {...props} />,
+	h2: (props: object) => <h2 className="text-title mt-5 mb-2 text-xl font-semibold" {...props} />,
+	h3: (props: object) => <h3 className="text-title mt-4 mb-2 text-lg font-semibold" {...props} />,
+	p: (props: object) => <p className="text-text/90 mb-3 leading-relaxed" {...props} />,
+	ul: (props: object) => <ul className="text-text/90 mb-3 list-disc space-y-1 pl-5" {...props} />,
+	ol: (props: object) => <ol className="text-text/90 mb-3 list-decimal space-y-1 pl-5" {...props} />,
+	a: (props: object) => <a className="text-primary underline underline-offset-2" target="_blank" rel="noreferrer" {...props} />,
+	strong: (props: object) => <strong className="text-title font-semibold" {...props} />,
+	code: (props: object) => <code className="bg-card rounded-[2px] px-1.5 py-0.5 text-sm" {...props} />,
+};
+
+export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
+	const [active_tab, set_active_tab] = useState<PanelTab>('info');
+	const [expanded, set_expanded] = useState<ShowcaseItem | null>(null);
+
+	const tab_class = (tab: PanelTab) =>
+		`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${active_tab === tab ? 'border-primary text-text' : 'border-transparent text-tab-inactive hover:text-text'}`;
+
+	return (
+		<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14">
+			<div className="flex justify-center lg:w-[45%] lg:shrink-0 lg:pt-6">
+				<TrackingImage src={project.cover.src} alt={project.cover.alt} className="w-full max-w-sm" />
+			</div>
+
+			<div className="flex min-w-0 flex-1 flex-col lg:h-full">
+				<header className="shrink-0">
+					<h1 className="text-title text-3xl font-bold">{project.title}</h1>
+					<p className="text-subtext mt-1 text-sm">
+						{format_role(project)} · {format_years(project)}
+					</p>
+					<TrackInfoTags skills={project.skills} size={22} className="mt-4" />
+				</header>
+
+				<nav className="border-line mt-8 flex shrink-0 items-center gap-6 border-b-2">
+					<button type="button" onClick={() => set_active_tab('info')} className={tab_class('info')}>
+						Info
+					</button>
+					<button type="button" onClick={() => set_active_tab('showcase')} className={tab_class('showcase')}>
+						Showcase
+					</button>
+					{project.demo_url && (
+						<a
+							href={project.demo_url}
+							target="_blank"
+							rel="noreferrer"
+							className="text-tab-inactive hover:text-text flex items-center gap-1.5 border-b-2 border-transparent px-1 pb-2 text-sm font-medium transition-colors"
+						>
+							Demo
+							<ArrowSquareOut size={16} />
+						</a>
+					)}
+					{project.github_url && (
+						<a
+							href={project.github_url}
+							target="_blank"
+							rel="noreferrer"
+							aria-label="Open GitHub repository"
+							className="text-tab-inactive hover:text-text ml-auto border-b-2 border-transparent px-1 pb-2 transition-colors"
+						>
+							<GithubLogo size={20} />
+						</a>
+					)}
+				</nav>
+
+				<div className="mt-6 flex-1 lg:overflow-y-auto lg:pr-2">
+					{active_tab === 'info' && (
+						<div className="max-w-prose">
+							<Markdown components={markdown_components}>{project.info}</Markdown>
+						</div>
+					)}
+
+					{active_tab === 'showcase' &&
+						(project.showcase.length === 0 ? (
+							<p className="text-deeptext text-sm">No showcase items yet.</p>
+						) : (
+							<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+								{project.showcase.map((item, index) => (
+									<button
+										key={`${item.src}-${index}`}
+										type="button"
+										onClick={() => set_expanded(item)}
+										className="border-line bg-card aspect-video overflow-hidden rounded-[2px] border-2 transition-opacity hover:opacity-80"
+									>
+										<img src={item.src} alt={item.alt} className="h-full w-full object-cover" draggable={false} />
+									</button>
+								))}
+							</div>
+						))}
+				</div>
+			</div>
+
+			{expanded && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6" onClick={() => set_expanded(null)}>
+					<button type="button" aria-label="Close" className="text-tab-inactive hover:text-text absolute top-5 right-5 transition-colors" onClick={() => set_expanded(null)}>
+						<X size={28} />
+					</button>
+					<img src={expanded.src} alt={expanded.alt} className="border-line max-h-full max-w-full rounded-[2px] border-2 object-contain" onClick={(event) => event.stopPropagation()} />
+				</div>
+			)}
+		</section>
+	);
+}
