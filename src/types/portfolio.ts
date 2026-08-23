@@ -15,7 +15,8 @@ export type Skill =
 	| 'expo'
 	| 'java'
 	| 'supabase'
-	| 'sentry';
+	| 'sentry'
+	| 'javascript';
 
 export interface MonthYear {
 	year: number;
