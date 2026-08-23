@@ -32,6 +32,7 @@ export interface ShowcaseItem {
 export interface Project {
 	id: string;
 	title: string;
+	role_title: string;
 	brief_description: string;
 	info: string;
 	role: ProjectRole;
