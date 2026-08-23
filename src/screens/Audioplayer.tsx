@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import { ArrowSquareOut, GithubLogo, X } from '@phosphor-icons/react';
 import TrackingImage from '@/components/TrackingImage';
 import TrackInfoTags from '@/components/TrackInfoTags';
 import type { Project, ShowcaseItem } from '@/types/portfolio';
+import { getColorSync } from 'colorthief';
+import Dither from '@/components/Dither';
 
 type PanelTab = 'info' | 'showcase';
 
@@ -37,16 +39,46 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 	const [active_tab, set_active_tab] = useState<PanelTab>('info');
 	const [expanded, set_expanded] = useState<ShowcaseItem | null>(null);
 
+	const cover_ref = useRef<HTMLImageElement>(null);
+
+	const [wave_color, set_wave_color] = useState<[number, number, number]>([0.4745, 0, 0.5647]);
+
+	const [orientations, set_orientations] = useState<Record<string, 'portrait' | 'landscape'>>({});
+
+	const handle_showcase_load = (src: string, img: HTMLImageElement) => {
+		const orientation = img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait';
+		set_orientations((prev) => (prev[src] === orientation ? prev : { ...prev, [src]: orientation }));
+	};
+
+	const handle_cover_load = () => {
+		if (!cover_ref.current) return;
+		try {
+			const color = getColorSync(cover_ref.current);
+			const rgb = color?.array();
+			if (rgb) set_wave_color([rgb[0] / 255, rgb[1] / 255, rgb[2] / 255]);
+		} catch {
+			// keep the current wave color if extraction fails
+		}
+	};
+
 	const tab_class = (tab: PanelTab) =>
 		`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${active_tab === tab ? 'border-primary text-text' : 'border-transparent text-tab-inactive hover:text-text'}`;
 
 	return (
-		<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14">
-			<div className="flex justify-center lg:w-[45%] lg:shrink-0 lg:pt-6">
+		<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14 lg:pb-0">
+			<div className="pointer-events-none absolute inset-0 z-0 opacity-80">
+				<Dither waveColor={wave_color} waveSpeed={0.05} waveFrequency={0.05} waveAmplitude={1} colorNum={10} pixelSize={3} enableMouseInteraction={false} disableAnimation={false} />
+			</div>
+
+			<div className="via-background/60 to-background from-background/10 pointer-events-auto absolute inset-0 z-[1] bg-gradient-to-r" />
+
+			<img ref={cover_ref} src={project.cover.src} alt="" aria-hidden className="hidden" crossOrigin="anonymous" onLoad={handle_cover_load} />
+
+			<div className="z-10 flex justify-center lg:w-[45%] lg:shrink-0 lg:pt-6">
 				<TrackingImage src={project.cover.src} alt={project.cover.alt} className="w-full max-w-sm" />
 			</div>
 
-			<div className="flex min-w-0 flex-1 flex-col lg:h-full">
+			<div className="z-10 flex min-w-0 flex-1 flex-col lg:h-full">
 				<header className="shrink-0">
 					<h1 className="text-title text-3xl font-bold">{project.title}</h1>
 					<p className="text-subtext mt-1 text-sm">
@@ -86,7 +118,7 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 					)}
 				</nav>
 
-				<div className="mt-6 flex-1 lg:overflow-y-auto lg:pr-2">
+				<div className="mt-6 flex-1 lg:overflow-y-auto lg:pr-2 lg:pb-16 lg:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)] lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)]">
 					{active_tab === 'info' && (
 						<div className="max-w-prose">
 							<Markdown components={markdown_components}>{project.info}</Markdown>
@@ -97,15 +129,21 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 						(project.showcase.length === 0 ? (
 							<p className="text-deeptext text-sm">No showcase items yet.</p>
 						) : (
-							<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+							<div className="grid grid-cols-1 items-start gap-3 sm:grid-cols-2">
 								{project.showcase.map((item, index) => (
 									<button
 										key={`${item.src}-${index}`}
 										type="button"
 										onClick={() => set_expanded(item)}
-										className="border-line bg-card aspect-video overflow-hidden rounded-[2px] border-2 transition-opacity hover:opacity-80"
+										className={`border-line bg-card aspect-square overflow-hidden rounded-[2px] border-2 transition-opacity hover:opacity-80 sm:aspect-auto ${orientations[item.src] === 'landscape' ? 'sm:col-span-2' : ''}`}
 									>
-										<img src={item.src} alt={item.alt} className="h-full w-full object-cover" draggable={false} />
+										<img
+											src={item.src}
+											alt={item.alt}
+											onLoad={(event) => handle_showcase_load(item.src, event.currentTarget)}
+											className="block h-full w-full object-cover sm:h-auto"
+											draggable={false}
+										/>
 									</button>
 								))}
 							</div>
