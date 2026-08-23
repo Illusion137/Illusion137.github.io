@@ -10,7 +10,7 @@ import Dither from '@/components/Dither';
 type PanelTab = 'info' | 'showcase';
 
 interface AudioplayerScreenProps {
-	project: Project;
+	project: Project | undefined;
 }
 
 function format_years(project: Project) {
@@ -64,8 +64,10 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 	const tab_class = (tab: PanelTab) =>
 		`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${active_tab === tab ? 'border-primary text-text' : 'border-transparent text-tab-inactive hover:text-text'}`;
 
+	if (project === undefined) return null;
+
 	return (
-		<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14 lg:pb-0">
+		<section className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14 lg:pb-0">
 			<div className="pointer-events-none absolute inset-0 z-0 opacity-80">
 				<Dither waveColor={wave_color} waveSpeed={0.05} waveFrequency={0.05} waveAmplitude={1} colorNum={10} pixelSize={3} enableMouseInteraction={false} disableAnimation={false} />
 			</div>
@@ -118,7 +120,7 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 					)}
 				</nav>
 
-				<div className="mt-6 flex-1 lg:overflow-y-auto lg:pr-2 lg:pb-16 lg:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)] lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)]">
+				<div className="mt-6 flex-1 lg:overflow-y-auto lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)] lg:pr-2 lg:pb-16 lg:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)]">
 					{active_tab === 'info' && (
 						<div className="max-w-prose">
 							<Markdown components={markdown_components}>{project.info}</Markdown>

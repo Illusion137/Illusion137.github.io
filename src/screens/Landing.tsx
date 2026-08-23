@@ -11,8 +11,8 @@ interface LandingScreenProps {
 	tagline?: string;
 	about?: string;
 	quote?: string;
-	onSelectPlaylist?: (playlist: Playlist) => void;
-	onSelectProject?: (project: Project) => void;
+	on_select_playlist?: (playlist: Playlist) => void;
+	on_select_project?: (project: Project) => void;
 }
 
 export default function LandingScreen({
@@ -24,8 +24,8 @@ export default function LandingScreen({
 	// eslint-disable-next-line no-irregular-whitespace
 	about = ` I'm a ${get_age('2/5/2007')}-year-old ${get_graduation_status()} Northern Arizona University with around ${get_age('1/1/22')} years of software engineering experience through projects and clubs. My main journey began in high school, in which I started working on GUI apps in C++ and mobile apps with React Native. Nearly all my projects I’ve ever done require large-scale data collection, and to satisfy this requirement, I’ve become fairly proficient in all sorts of web-scraping and reverse engineering.`,
 	quote = '"If it doesn\'t exist in this world I\'ll just have to make it myself."',
-	onSelectPlaylist,
-	onSelectProject,
+	on_select_playlist,
+	on_select_project,
 }: LandingScreenProps) {
 	return (
 		<div className="relative w-full overflow-x-clip">
@@ -53,7 +53,7 @@ export default function LandingScreen({
 								<button
 									key={playlist.id}
 									type="button"
-									onClick={() => onSelectPlaylist?.(playlist)}
+									onClick={() => on_select_playlist?.(playlist)}
 									className="group border-line bg-card hover:bg-playing-song flex w-40 shrink-0 flex-col gap-2 rounded-[2px] border-2 p-3 text-left transition-colors"
 								>
 									<img
@@ -75,7 +75,7 @@ export default function LandingScreen({
 						<p className="text-subtext text-xs font-medium tracking-widest uppercase">Projects</p>
 						<div className="mt-4 flex flex-col gap-3">
 							{projects.map((project) => (
-								<TrackComponent key={project.id} project={project} onSelect={onSelectProject} />
+								<TrackComponent key={project.id} project={project} onSelect={on_select_project} />
 							))}
 						</div>
 					</div>
