@@ -2,6 +2,7 @@ import {
 	GithubLogo,
 	InstagramLogo,
 	LinkedinLogo,
+	ReadCvLogoIcon
 } from '@phosphor-icons/react';
 import type { Playlist, Project, SocialLink } from '@/types/portfolio';
 
@@ -286,6 +287,11 @@ export const playlists: Playlist[] = [
 
 export const socials: SocialLink[] = [
 	{
+		name: 'Resume',
+		url: '/Daniel Raygoza - Resume.pdf',
+		icon: ReadCvLogoIcon,
+	},
+	{
 		name: 'GitHub',
 		url: 'https://github.com/Illusion137',
 		icon: GithubLogo,
@@ -299,5 +305,5 @@ export const socials: SocialLink[] = [
 		name: 'Instagram',
 		url: 'https://www.instagram.com/_sumi137/',
 		icon: InstagramLogo,
-	},
+	}
 ];
