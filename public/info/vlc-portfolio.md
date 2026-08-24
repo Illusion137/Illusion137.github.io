@@ -1,0 +1,5 @@
+Can be viewed at [illusi.dev](https://www.illusi.dev/). Design was based on [VLC](https://www.videolan.org/vlc/) because the goal was to make a film portfolio for my highschool film class and I believed a built-in custom video player would fit nicely.
+
+## Background
+
+My high school Film and TV II course required us to build a website that would be a portfolio for all the films we made over the years. Being the only one in the class to have any experience coding, I decided to make my portfolio with NextJS rather than using a website builder. Our interface was supposed to be unique to us, and so I made mine dedicated to VLC, my favorite media player. I also chose to reference it since it seemed that having an embedded video player would fit nicely to showcase films. Over the span of 3 days, I built the website with NextJS, TailwindCSS, Mux, and hosted it on Vercel at illusi.dev. A short project, but it got me a good amount of experience with frontend on the web, rather than just on mobile with React Native.

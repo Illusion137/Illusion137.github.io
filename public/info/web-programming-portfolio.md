@@ -1,0 +1,1 @@
+A simple portfolio made for CS 212 Web Programming I. Nothing much special about this first portfolio, besides the restrictions of not using any frameworks and just raw `HTML`, `CSS`, and `JavaScript`.
