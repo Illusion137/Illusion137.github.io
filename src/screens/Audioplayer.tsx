@@ -91,20 +91,22 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 	if (project === undefined) return null;
 
 	return (
-		<section className="z-20 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-28 lg:h-[calc(100dvh-5rem)] lg:flex-row lg:items-start lg:gap-14 lg:pb-0">
+		<div className="relative h-full w-full overflow-hidden">
 			<div className="pointer-events-none absolute inset-0 z-0 opacity-80">
 				<Dither waveColor={wave_color} waveSpeed={0.05} waveFrequency={0.05} waveAmplitude={1} colorNum={10} pixelSize={3} enableMouseInteraction={false} disableAnimation={false} />
 			</div>
 
-			<div className="via-background/60 to-background from-background/10 pointer-events-auto absolute inset-0 z-[1] bg-gradient-to-r" />
+			<div className="via-background/60 to-background from-background/10 pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r" />
 
 			<img ref={cover_ref} src={project.cover.src} alt="" aria-hidden className="hidden" crossOrigin="anonymous" onLoad={handle_cover_load} />
 
-			<div className="z-10 flex justify-center lg:w-[45%] lg:shrink-0 lg:pt-6">
-				<TrackingImage src={project.cover.src} alt={project.cover.alt} className="w-full max-w-sm" />
-			</div>
+			<div className="relative z-10 h-full overflow-y-auto [mask-image:linear-gradient(to_bottom,black_calc(100%_-_9rem),transparent_calc(100%_-_5rem))] [-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_9rem),transparent_calc(100%_-_5rem))]">
+				<section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pt-12 pb-40 lg:flex-row lg:items-start lg:gap-14">
+					<div className="flex justify-center lg:sticky lg:top-12 lg:w-[45%] lg:shrink-0 lg:pt-6">
+						<TrackingImage src={project.cover.src} alt={project.cover.alt} className="w-full max-w-sm" />
+					</div>
 
-			<div className="z-10 flex min-w-0 flex-1 flex-col lg:h-full">
+					<div className="flex min-w-0 flex-1 flex-col">
 				<header className="shrink-0">
 					<h1 className="text-title text-3xl font-bold">{project.title}</h1>
 					<p className="text-subtext mt-1 text-sm">
@@ -144,7 +146,7 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 					)}
 				</nav>
 
-				<div className="mt-6 flex-1 lg:overflow-y-auto lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)] lg:pr-2 lg:pb-16 lg:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)]">
+				<div className="mt-6">
 					{active_tab === 'info' && (
 						<div className="max-w-prose">
 							<Markdown components={markdown_components}>{info_markdown}</Markdown>
@@ -175,6 +177,8 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 							</div>
 						))}
 				</div>
+				</div>
+				</section>
 			</div>
 
 			{expanded && (
@@ -185,6 +189,6 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 					<img src={expanded.src} alt={expanded.alt} className="border-line max-h-full max-w-full rounded-[2px] border-2 object-contain" onClick={(event) => event.stopPropagation()} />
 				</div>
 			)}
-		</section>
+		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import { Info, SkipBack, SkipForward } from '@phosphor-icons/react';
+import { SkipBack, SkipForward } from '@phosphor-icons/react';
 import type { Project, SocialLink } from '@/types/portfolio';
 import ProgressBar from '@/components/ProgressBar';
 
@@ -10,7 +10,6 @@ interface BottomBarProps {
 	socials: SocialLink[];
 	on_previous?: () => void;
 	on_next?: () => void;
-	on_more_info?: () => void;
 	on_toggle?: () => void;
 	is_player_open?: boolean;
 }
@@ -25,7 +24,7 @@ function format_role(project: Project) {
 	return project.role === 'self' ? 'Self' : project.role === 'group' ? 'Group' : 'Contribution';
 }
 
-export default function BottomBar({ project, viewed, total, progress, socials, on_previous, on_next, on_more_info, on_toggle, is_player_open }: BottomBarProps) {
+export default function BottomBar({ project, viewed, total, progress, socials, on_previous, on_next, on_toggle, is_player_open }: BottomBarProps) {
 	const stop = (event: { stopPropagation: () => void }) => event.stopPropagation();
 
 	return (
@@ -33,7 +32,7 @@ export default function BottomBar({ project, viewed, total, progress, socials, o
 			<ProgressBar value={total === 0 ? 0 : progress} />
 			<footer
 				onClick={on_toggle}
-				className={`border-line grid h-20 w-full grid-cols-3 items-center px-5 transition-colors duration-500 ease-out ${is_player_open ? 'bg-play-screen/50' : 'bg-play-screen'} ${project ? 'cursor-pointer' : ''}`}
+				className={`border-line grid h-20 w-full grid-cols-3 items-center px-5 transition-colors duration-500 ease-out max-sm:pr-2 ${is_player_open ? 'bg-play-screen/50' : 'bg-play-screen'} ${project ? 'cursor-pointer' : ''}`}
 			>
 				<div className="flex items-center gap-3">
 					<button
@@ -63,7 +62,7 @@ export default function BottomBar({ project, viewed, total, progress, socials, o
 					</span>
 				</div>
 
-				<div className="flex min-w-0 flex-col items-center justify-center text-center">
+				<div className="flex min-w-0 flex-col items-center justify-center text-center max-sm:hidden">
 					{project ? (
 						<>
 							<span className="text-title max-w-full truncate font-semibold">{project.title}</span>
@@ -76,19 +75,7 @@ export default function BottomBar({ project, viewed, total, progress, socials, o
 					)}
 				</div>
 
-				<div className="flex items-center justify-end gap-3">
-					<button
-						type="button"
-						onClick={(event) => {
-							stop(event);
-							on_more_info?.();
-						}}
-						aria-label="More info"
-						className="text-subtext hover:text-text transition-colors"
-					>
-						<Info size={22} />
-					</button>
-					<span className="bg-line mx-1 h-6 w-px" aria-hidden />
+				<div className="col-start-3 flex items-center justify-end gap-2 sm:gap-3">
 					{socials.map((social) => (
 						<a
 							key={social.name}
