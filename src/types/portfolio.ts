@@ -1,6 +1,6 @@
 import type { Icon } from '@phosphor-icons/react';
 
-export type ProjectRole = 'self' | 'contribution';
+export type ProjectRole = 'self' | 'group' | 'contribution';
 
 export type Skill =
 	| 'typescript'
@@ -16,7 +16,13 @@ export type Skill =
 	| 'java'
 	| 'supabase'
 	| 'sentry'
-	| 'javascript';
+	| 'javascript'
+	| 'html'
+	| 'css'
+	| 'jquery'
+	| 'vitest'
+	| 'racket'
+	| 'prolog';
 
 export interface MonthYear {
 	year: number;
@@ -35,7 +41,6 @@ export interface Project {
 	title: string;
 	role_title: string;
 	brief_description: string;
-	info: string;
 	role: ProjectRole;
 	start: MonthYear;
 	end: ProjectEnd;
