@@ -1,0 +1,5 @@
+Still in progress, but will be like Jacks Scheduler with builtin Jacks Planner, class distance checking and serve as an API for other students to interact with Louie.
+
+## Background
+
+As a starting note, this project is still heavily in development. When registering for my second semester classes at NAU, I found it a pain in the process, constantly having to reference several webpages that would log me out every 5 minutes, having to double-check I could make it to classes on time, and triple-checking that the class would work for me and that it didn’t have reserved seats. I would then plot out a C++ library that would allow students to interact with NAU and handle authentication, caching, etc., and would allow students to generate proper schedules without having to worry if the schedule would even work for them or not. In terms of progress of the project, the architecture is all there, from the data collection, prebuilding, and working out how classes would be generated. There is still a need for the proper API to be complete, and likely a user interface that I would build with ImGUI.
