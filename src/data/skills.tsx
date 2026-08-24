@@ -1,7 +1,26 @@
 import type { FC } from 'react';
 import type { IconType } from 'react-icons';
-import { SiCplusplus, SiDiscord, SiExpo, SiJavascript, SiNextdotjs, SiNodedotjs, SiReact, SiSentry, SiSupabase, SiTauri, SiTypescript, SiWebassembly } from 'react-icons/si';
+import {
+	SiCplusplus,
+	SiCss,
+	SiDiscord,
+	SiExpo,
+	SiHtml5,
+	SiJavascript,
+	SiJquery,
+	SiNextdotjs,
+	SiNodedotjs,
+	SiRacket,
+	SiReact,
+	SiSentry,
+	SiSupabase,
+	SiTauri,
+	SiTypescript,
+	SiVitest,
+	SiWebassembly,
+} from 'react-icons/si';
 import { FaJava } from 'react-icons/fa6';
+import { TbPrompt } from 'react-icons/tb';
 import type { Skill } from '@/types/portfolio';
 
 export interface SkillIconProps {
@@ -32,6 +51,12 @@ const skill_meta: Record<Skill, SkillMeta> = {
 	supabase: { name: 'Supabase', color: '#3FCF8E', icon: SiSupabase },
 	sentry: { name: 'Sentry', color: '#8D5494', icon: SiSentry },
 	javascript: { name: 'JavaScript', color: '#F0DB4F', icon: SiJavascript },
+	html: { name: 'HTML5', color: '#E34F26', icon: SiHtml5 },
+	css: { name: 'CSS', color: '#663399', icon: SiCss },
+	jquery: { name: 'jQuery', color: '#0769AD', icon: SiJquery },
+	vitest: { name: 'Vitest', color: '#6E9F18', icon: SiVitest },
+	racket: { name: 'Racket', color: '#9F1D20', icon: SiRacket },
+	prolog: { name: 'Prolog', color: '#EC1C24', icon: TbPrompt },
 };
 
 function make_skill_component(meta: SkillMeta): SkillComponent {
