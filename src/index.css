@@ -197,7 +197,7 @@ code {
 	--color-secondary: #fc00c9;
 	--color-background: #0d1016;
 	--color-primary-dark: #1a184f;
-	--color-card: #131213;
+	--color-card: #080b14;
 	--color-title: #d0d0d0;
 	--color-text: #ffffff;
 	--color-subtext: #8c939d;
@@ -223,7 +223,7 @@ code {
 .dark {
 	--background: oklch(0.145 0 0);
 	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
+	--card: #080b14;
 	--card-foreground: oklch(0.985 0 0);
 	--popover: oklch(0.205 0 0);
 	--popover-foreground: oklch(0.985 0 0);
@@ -259,7 +259,7 @@ code {
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background font-sans text-foreground;
+		@apply bg-background text-foreground font-sans;
 	}
 	h1,
 	h2,

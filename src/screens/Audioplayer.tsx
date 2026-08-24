@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import { ArrowSquareOut, GithubLogo, X } from '@phosphor-icons/react';
 import TrackingImage from '@/components/TrackingImage';
@@ -20,7 +20,7 @@ function format_years(project: Project) {
 }
 
 function format_role(project: Project) {
-	return project.role === 'self' ? 'Self' : 'Contribution';
+	return project.role === 'self' ? 'Self' : project.role === 'group' ? 'Group' : 'Contribution';
 }
 
 const markdown_components = {
@@ -44,6 +44,30 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 	const [wave_color, set_wave_color] = useState<[number, number, number]>([0.4745, 0, 0.5647]);
 
 	const [orientations, set_orientations] = useState<Record<string, 'portrait' | 'landscape'>>({});
+
+	const [info_markdown, set_info_markdown] = useState<string>('');
+
+	const project_id = project?.id;
+	useEffect(() => {
+		if (!project_id) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect
+			set_info_markdown('');
+			return;
+		}
+		let cancelled = false;
+		set_info_markdown('');
+		fetch(`info/${project_id}.md`)
+			.then((response) => (response.ok ? response.text() : ''))
+			.then((text) => {
+				if (!cancelled) set_info_markdown(text);
+			})
+			.catch(() => {
+				if (!cancelled) set_info_markdown('');
+			});
+		return () => {
+			cancelled = true;
+		};
+	}, [project_id]);
 
 	const handle_showcase_load = (src: string, img: HTMLImageElement) => {
 		const orientation = img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait';
@@ -123,7 +147,7 @@ export default function AudioplayerScreen({ project }: AudioplayerScreenProps) {
 				<div className="mt-6 flex-1 lg:overflow-y-auto lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)] lg:pr-2 lg:pb-16 lg:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%_-_4rem),transparent)]">
 					{active_tab === 'info' && (
 						<div className="max-w-prose">
-							<Markdown components={markdown_components}>{project.info}</Markdown>
+							<Markdown components={markdown_components}>{info_markdown}</Markdown>
 						</div>
 					)}
 

@@ -9,6 +9,13 @@ interface TrackComponentProps {
 	className?: string;
 }
 
+function timeline_str(project: Project) {
+	const start = project.start.year;
+	const end = project.end === 'present' ? 'Present' : project.end.year;
+	if (start === end) return '';
+	return ` • ${start} — ${end}`;
+}
+
 export default function TrackComponent({ project, onSelect, className = '' }: TrackComponentProps) {
 	const stop = (event: MouseEvent) => event.stopPropagation();
 
@@ -17,12 +24,15 @@ export default function TrackComponent({ project, onSelect, className = '' }: Tr
 			role="button"
 			tabIndex={0}
 			onClick={() => onSelect?.(project)}
-			className={`group border-line bg-track hover:bg-playing-song flex w-full items-center gap-4 rounded-[2px] border-2 p-3 text-left transition-colors ${className}`}
+			className={`group border-line bg-card hover:bg-track flex w-full cursor-pointer items-center gap-4 rounded-[2px] border-1 p-3 text-left transition-colors ${className}`}
 		>
-			<img src={project.cover.src} alt={project.cover.alt} className="border-line bg-card h-16 w-16 flex-shrink-0 rounded-[2px] border-2 object-cover" draggable={false} />
+			<img src={project.cover.src} alt={project.cover.alt} className="border-line h-16 w-16 flex-shrink-0 rounded-[2px] object-cover" draggable={false} />
 
 			<div className="flex min-w-0 flex-1 flex-col justify-center">
-				<h3 className="text-title truncate font-semibold leading-tight">{project.title}</h3>
+				<h3 className="text-title truncate leading-tight font-semibold">
+					{project.title}
+					<span className="text-subtext ml-1 text-sm font-normal">{timeline_str(project)}</span>
+				</h3>
 				<p className="text-subtext mb-1.5 truncate text-sm leading-snug">{project.brief_description}</p>
 				<TrackInfoTags skills={project.skills} size={14} gap={8} />
 			</div>

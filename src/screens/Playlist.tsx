@@ -4,7 +4,7 @@ import { playlists, projects as all_projects } from '@/data/portfolio';
 import type { Playlist, Project } from '@/types/portfolio';
 import Dither from '@/components/Dither';
 import { getColorSync } from 'colorthief';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 interface PlaylistScreenProps {
 	playlist_id: string;
@@ -15,7 +15,10 @@ interface PlaylistScreenProps {
 
 export default function PlaylistScreen({ playlist_id, on_back, on_select_playlist_play, on_select_project }: PlaylistScreenProps) {
 	const playlist = playlists.find((playlist) => playlist.id === playlist_id)!;
-	const projects = all_projects.filter((project) => playlist?.project_ids.includes(project.id));
+	const projects = useMemo<Project[]>(
+		() => (playlist.project_ids ?? []).map((id) => all_projects.find((project) => project.id === id)).filter((project): project is Project => project !== undefined),
+		[playlist.project_ids],
+	);
 
 	const cover_ref = useRef<HTMLImageElement>(null);
 

@@ -71,7 +71,7 @@ export default function TrackingImage({ src, alt, max_tilt = 18, className = '' 
 		<div ref={container_ref} className={`relative [perspective:1000px] ${className}`}>
 			<div ref={card_ref} className="relative aspect-square h-full w-full [transform-style:preserve-3d]">
 				<div aria-hidden className="pointer-events-none absolute inset-0 translate-y-6 rounded-[2px] bg-black/60 blur-2xl" />
-				<div className="bg-card relative h-full w-full [transform:translateZ(40px)] overflow-hidden rounded-[2px]">
+				<div className="relative h-full w-full [transform:translateZ(40px)] overflow-hidden rounded-[2px]">
 					<img src={src} alt={alt} className="h-full w-full object-cover" draggable={false} />
 					<div
 						aria-hidden
