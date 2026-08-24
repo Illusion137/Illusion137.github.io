@@ -1,4 +1,5 @@
-import { useRef, useEffect, forwardRef } from 'react';
+//reactbits.dev/backgrounds/dither?waveFrequency=2.1&colorNum=19&mouseRadius=0.4&waveAmplitude=0.16&waveSpeed=0.02&waveColor=0.4745098039215686,0,0.5647058823529412
+https: import { useRef, useEffect, forwardRef } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
